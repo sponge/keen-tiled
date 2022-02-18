@@ -1,0 +1,7 @@
+{
+  "name": "keen-tiled",
+  "dependencies": {
+    "@mapeditor/tiled-api": "^1.8.1",
+    "@types/node": "^17.0.18"
+  }
+}
