@@ -86,6 +86,7 @@ function decode(buffer) {
         }
         tiles.push(inner);
     }
+    offset = psize;
     const sprites = [];
     for (let y = 0; y < height; y++) {
         let inner = [];
