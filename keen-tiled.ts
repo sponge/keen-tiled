@@ -126,7 +126,11 @@ function decode(buffer: ArrayBuffer): KeenMap {
   return {tiles, sprites};
 }
 
-function customMapFormat(name: string, extension: string, tilesetImgPath: string) {
+function getKey<K,V>(map: Map<K, V>, val: V ): K {
+  return [...map].find(([k, v]) => val === v)[0];
+}
+
+function customMapFormat(name: string, extension: string, tilesetImgPath: string, objMap: Map<number, string>) {
   return {
     name,
     extension,
@@ -157,7 +161,7 @@ function customMapFormat(name: string, extension: string, tilesetImgPath: string
       }
 
       for (let obj of spriteLayer.objects) {
-        kmap.sprites[Math.floor(obj.y/16)][Math.floor(obj.x/16)] = parseInt(obj.name, 10);
+        kmap.sprites[Math.floor(obj.y/16)][Math.floor(obj.x/16)] = getKey(objMap, obj.name) ?? 0;
       }
 
       const f = new BinaryFile(fileName, BinaryFile.WriteOnly);
@@ -202,7 +206,7 @@ function customMapFormat(name: string, extension: string, tilesetImgPath: string
             continue;
           }
           const sprId = map.sprites[y][x];
-          const obj = new MapObject(sprId.toString());
+          const obj = new MapObject(objMap.get(sprId) ?? sprId.toString());
           obj.size.width = 16;
           obj.size.height = 16;
           obj.x = x * 16;
@@ -217,10 +221,57 @@ function customMapFormat(name: string, extension: string, tilesetImgPath: string
   }
 }
 
+const k1obj = new Map<number, string>([
+  [1, 'Yorp'],
+  [2, 'Garg'],
+  [3, 'Vort'],
+  [4, 'Can'],
+  [5, 'Tank'],
+  [6, 'CannonUpRight'],
+  [7, 'CannonUp'],
+  [8, 'CannonDown'],
+  [9, 'CannonUpLeft'],
+  [10, 'Thread'],
+  [255, 'Keen'],
+]);
+
+const k2obj = new Map<number, string>([
+  [1, 'Grunt'],
+  [2, 'Youth'],
+  [3, 'Elite'],
+  [4, 'Scrub'],
+  [5, 'Guard'],
+  [6, 'Platform'],
+  [7, 'Spark'],
+  [255, 'Keen'],
+]);
+
+const k3obj = new Map<number, string>([
+  [1, 'Grunt'],
+  [2, 'Youth'],
+  [3, 'Woman'],
+  [4, 'Meep'],
+  [5, 'Ninja'],
+  [6, 'Foob'],
+  [7, 'Ball'],
+  [8, 'Cube'],
+  [9, 'Platform'],
+  [10, 'Elevator'],
+  [11, 'Grunt'],
+  [12, 'Spark'],
+  [13, 'Heart'],
+  [14, 'WestTurret'],
+  [15, 'NorthTurret'],
+  [16, 'Arm'],
+  [17, 'LeftLeg'],
+  [18, 'RightLeg'],
+  [255, 'Keen'],
+]);
+
 if (tiled) {
-  tiled.registerMapFormat("keen1", customMapFormat("Commander Keen 1", "ck1", "ext:keen1.png"));
-  tiled.registerMapFormat("keen2", customMapFormat("Commander Keen 2", "ck2", "ext:keen2.png"));
-  tiled.registerMapFormat("keen3", customMapFormat("Commander Keen 3", "ck3", "ext:keen3.png"));
+  tiled.registerMapFormat("keen1", customMapFormat("Commander Keen 1", "ck1", "ext:keen1.png", k1obj));
+  tiled.registerMapFormat("keen2", customMapFormat("Commander Keen 2", "ck2", "ext:keen2.png", k2obj));
+  tiled.registerMapFormat("keen3", customMapFormat("Commander Keen 3", "ck3", "ext:keen3.png", k3obj));
 }
 
 // import fs from 'fs';
