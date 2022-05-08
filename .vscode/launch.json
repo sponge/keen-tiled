@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Run TS",
-      "program": "${workspaceFolder}/keen-tiled.js",
+      "program": "${workspaceFolder}/galaxy-tiled.js",
       "request": "launch",
       "skipFiles": [
         "<node_internals>/**"

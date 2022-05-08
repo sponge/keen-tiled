@@ -6,5 +6,5 @@
     "sourceMap": true,
     // "outDir": "/Users/sponge/Library/Preferences/Tiled/extensions/"
   },
-  "include": ["./keen-tiled.ts"]
+  "include": ["./keen-tiled.ts", "./galaxy-tiled.ts"]
 }
