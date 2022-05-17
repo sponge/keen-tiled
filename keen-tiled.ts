@@ -179,11 +179,9 @@ function customMapFormat(name: string, extension: string, tilesetImgPath: string
       tmap.setTileSize(16, 16);
       tmap.orientation = TileMap.Orthogonal;
 
-      const img = new Image(tilesetImgPath);
-
       const tileset = new Tileset(name);
       tileset.setTileSize(16, 16);
-      tileset.loadFromImage(img);
+      tileset.image = tilesetImgPath;
       tmap.addTileset(tileset);
 
       const tilelayer = new TileLayer('tiles');
