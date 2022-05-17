@@ -152,10 +152,9 @@ function customGalaxyMapFormat(name: string, extension: string, bgTilesetImgPath
       tmap.orientation = TileMap.Orthogonal;
 
       // background
-      const bgImg = new Image(bgTilesetImgPath);
       const bgTileset = new Tileset("bg");
       bgTileset.setTileSize(16, 16);
-      bgTileset.loadFromImage(bgImg);
+      bgTileset.image = bgTilesetImgPath;
       tmap.addTileset(bgTileset);
 
       const bgLayer = new TileLayer('bg');
@@ -173,10 +172,9 @@ function customGalaxyMapFormat(name: string, extension: string, bgTilesetImgPath
       tmap.addLayer(bgLayer);
 
       // foreground
-      const fgImg = new Image(fgTilesetImgPath);
       const fgTileset = new Tileset("fg");
       fgTileset.setTileSize(16, 16);
-      fgTileset.loadFromImage(fgImg);
+      fgTileset.image = fgTilesetImgPath;
       tmap.addTileset(fgTileset);
 
       const fgLayer = new TileLayer('fg');
